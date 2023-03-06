@@ -1,0 +1,58 @@
+
+- name: ------------ make project  directory -------------------
+  file:
+    path: "/home/{{ansible_root}}/{{project_name}}"
+    state: directory
+  tags: [proj_root_dir]
+
+- name: ------------ make project  directory -------------------
+  file:
+    path: "/home/{{ansible_root}}/inventory"
+    state: directory
+  tags: [proj_inv_dir]
+
+- name: ------------ make project  directory -------------------
+  file:
+    path: "/home/{{ansible_root}}/inventory/hosts"
+    state: touch
+  tags: [proj_inv_dir]
+
+
+- name: ------------- create project yaml ----------
+  file:
+    path: "/home/{{ansible_root}}/{{project_name}}.yml"
+    state: touch
+  tags: [project_yml]
+
+- name: --------- create role project  ----------------
+  file:
+    path: "/home/{{ansible_root}}/roles/{{project_name}}"
+    state: directory
+  tags: [create_role_dir]
+
+
+- name: ------------- create 7 directory -------
+  file:
+    path: "/home/{{ansible_root}}/roles/{{project_name}}/{{item}}"
+    state: directory
+  loop:
+    - tasks
+    - vars
+    - templates
+    - handlers
+    - files
+    - defaults
+    - meta
+  tags: [seven_dir]
+
+- name: -------------- create yaml.yml files ------------
+  file:
+    path: "/home/{{ansible_root}}/roles/{{project_name}}/{{item}}/main.yaml"
+    state: touch
+  loop:
+    - tasks
+    - vars
+    - handlers
+    - defaults
+    - meta
+  tags: [seven_dir]
